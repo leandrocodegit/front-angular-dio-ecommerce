@@ -1,10 +1,13 @@
-import {  Component, OnInit } from '@angular/core'; 
-import {  Router } from '@angular/router'; 
+import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
 import { CardHolder } from 'src/app/models/checkouts/CardHolder';
 import { ResponseCheckout } from 'src/app/models/checkouts/ResponseCheckout';
-import { PaymentService } from 'src/app/services/PaymentService';
+import { MensagemService } from 'src/app/services/MensagemService';
+import { PaymentService } from 'src/app/services/PaymentService'; 
+import { SheetComponent } from '../../view/sheet/sheet.component';
 
- 
+
 declare var loadCardForm: any;
 declare var getToken: any
 declare var atualizarToken: any
@@ -17,7 +20,7 @@ declare var getValid: any
 })
 export class CardComponent implements OnInit {
 
-  isLoad: boolean = true
+  isLoad: boolean = false
   isValid: string = 'false'
 
   card: CardHolder = {} as CardHolder;
@@ -25,57 +28,54 @@ export class CardComponent implements OnInit {
   cardExpirationMonth: string = '';
   cardExpirationYear: string = '';
   securityCode: string = '';
- 
+
   token = {} as CardHolder
   responsePay = {} as ResponseCheckout
   error = {} as any
 
   constructor(
+    private mensagemService: MensagemService,
     private paymentService: PaymentService,
-    private route: Router 
+    private _bottomSheet: MatBottomSheet,
+    private route: Router
   ) {
 
   }
   ngOnInit(): void {
-    new loadCardForm()  
+    new loadCardForm()
   }
 
 
   execute() {
     this.updateToken()
   }
- 
+
   private updateToken() {
 
-     
-     
-    console.log('isvalid() = ' + this.isValid)
-
-    if(getValid()){
-      this.isValid = 'true' 
-    new atualizarToken()
-    this.token = getToken()
-    if (this.token.token != null) {
-      console.log('TOKEN ' + this.token.token + ' ' + this.isValid) 
-     
+    if (getValid()) {
+      this.isValid = 'true'
+      new atualizarToken()
+      this.token = getToken()
     }
-     
-  }
-  else{
-    this.isValid = 'false' 
-  }
-    console.log('Valid '  + this.isValid + ' text = ' )
+    else {
+      this.isValid = 'false'
+    }
   }
 
   pagar() {
-    if (this.token.token == null) {
-      // this.execute()
-    }
-    this.isLoad = false
+    this.isLoad = true
     this.paymentService.processPayment(this.token).subscribe(result => {
       this.responsePay = result
-      if (this.responsePay.status == 'approved') {
+      console.log(result)
+      if (this.responsePay.status == 'Aprovado') {
         this.route.navigate(['/pedido/status/' + this.responsePay.id]);
+      }
+      else{
+        this.mensagemService.sendMesage([result.detail, result.status])
+        this._bottomSheet.open(SheetComponent);
+        setTimeout(() => this._bottomSheet.dismiss(SheetComponent), 3000);
+        this.isLoad = false
+        this.updateToken()
       }
 
     }, (erro) => {

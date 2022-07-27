@@ -204,7 +204,7 @@ function getValid() {
 
 
     if (cardNumber.length > 14 &&
-        cardholderName.length > 10 &&
+        cardholderName.length > 1 &&
         cardExpirationMonth.length == 2 &&
         cardExpirationYear.length == 2 &&
         securityCode.length > 2) {

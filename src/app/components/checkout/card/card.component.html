@@ -1,6 +1,6 @@
 <main>
     <spa-top></spa-top>
-    <spa-load *ngIf="!isLoad"></spa-load>
+    <spa-load *ngIf="isLoad"></spa-load>
     <!-- Shopping Cart -->
     <section class="hidden">
         <span id="product-description" >Teste</span>
@@ -8,7 +8,7 @@
         <input type="text" value="10.0" id="unit-price"/>
     </section>
     <!-- Payment --> 
-    <section class="payment-form dark">
+    <section [class.close]="isLoad" class="payment-form dark">
         <div class="container__payment">
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 <div class="payment-details">
