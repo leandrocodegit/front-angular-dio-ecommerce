@@ -1,0 +1,13 @@
+#forma-pagamento{
+    width: 90vw;
+    height: 75vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    }
+    #forma-pagamento p{
+    color: #212529;
+    font-family: roboto;
+    font-size: 22px;
+    }

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+</head>
+<body>
+ 
+<main>
+    <input type="hidden" id="mercado-pago-public-key"  />
+
+    <!-- Shopping Cart -->
+    <section>
+        <span id="product-description" class="hidden">Teste</span>
+        <input type="text" id="quantity" value="1" min="1" class="form-control"/>
+        <input type="text" value="10.0" id="unit-price"/>
+    </section>
+    <!-- Payment -->
+    <section class="payment-form dark">
+        <div class="container__payment">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="payment-details">
+                    <form id="form-checkout" class="was-validated">
+                        <div class="accordion accordion-flush" id="accordionTitular">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                            aria-controls="flush-collapseTwo">
+                                        Dados do titular
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body container">
+                                        <div class="row">
+                                            <div class="form-group col">
+                                                <input value="lpoliveira.ti@gmail.com" required
+                                                       id="form-checkout__cardholderEmail" name="cardholderEmail"
+                                                       type="email" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="form-group col-sm-5">
+                                                <input type="hidden" value="CPF" required
+                                                       id="form-checkout__identificationType" name="identificationType"
+                                                       class="form-control"/>
+                                            </div>
+                                            <div class="form-group col-sm-7">
+                                                <input value="08987782638" required pattern="[0-9]{1}[0-9][0-9]{9}"
+                                                       id="form-checkout__identificationNumber" name="docNumber"
+                                                       type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="container">
+                            <div class="container" style="width: 95%">
+                                <div class="mb-3">
+                                    <label for="form-checkout__cardholderName" class="form-label">Nome do
+                                        titular</label>
+                                    <input value="Leandro Olivera" name="cardholderName" minlength="1" required type="text"
+                                           class="form-control" id="form-checkout__cardholderName"
+                                           placeholder="Igual do cartão"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label id="token" for="form-checkout__cardNumber" class="form-label">Numero do cartão</label>
+                                    <input id="form-checkout__cardNumber" type="hidden"/>
+                                    <input id="numeroCartao" pattern="[0-9\s]{13,19}" required
+                                           name="numeroCartao" type="tel" class="form-control"/>
+                                    <div class="hidden">
+                                        <label for="numeroCartao" generated="false" class="error"></label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="form-checkout__cardExpirationMonth" class="form-label">Validade</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" style="color:#bec1c5">Mês</span>
+                                        <input id="form-checkout__cardExpirationMonth" pattern="(0[1-9]|1[012])"
+                                               required name="cardExpirationMonth" type="tel" class="form-control is-valid"
+                                               placeholder="00" value="11"/>
+                                        <div class="hidden">
+                                            <label for="form-checkout__cardExpirationMonth" generated="false" class="error"></label>
+                                        </div>
+                                        <span class="input-group-text" style="color:#bec1c5">Ano</span>
+                                        <input id="form-checkout__cardExpirationYear" pattern="[2-9][0-9]{1}" required
+                                               name="cardExpirationYear" type="tel" class="form-control is-valid"
+                                               placeholder="00" value="25"/>
+                                        <div class="hidden">
+                                            <label for="form-checkout__cardExpirationYear" generated="false" class="error"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex">
+                                            <div class="flex-fill" >
+                                                <label for="form-checkout__securityCode" class="form-label">Codigo de
+                                                    segurança</label>
+                                                <input id="form-checkout__securityCode" pattern="[0-9]{3}" required
+                                                       name="securityCode" type="tel" class="form-control" placeholder="CVV"
+                                                       value="123" style="width:150px">
+                                            </div>
+                                            <div class="flex-fill">
+                                                <div style="float: right;">
+                                                    <img id="bandeira" src="">
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+
+                                <div id="issuerInput" class="form-group col-sm-12 hidden">
+                                    <select id="form-checkout__issuer" name="issuer"  required
+                                            class="form-control"></select>
+                                </div>
+                                <label for="form-checkout__securityCode" class="form-label">Opções de parcelamento</label>
+                                <div class="form-group col-sm-12" >
+                                    <select id="form-checkout__installments" name="installments" type="text"
+                                            class="form-control"></select>
+                                </div>
+                                <div class="form-group col-sm-12" style="padding-bottom:30px">
+                                    <input   type="hidden" id="amount"/>
+                                    <input type="hidden" id="description"/>
+                                    <p id="loading-message" style="color: #ff9e3a;padding: 15px;"></p>
+                                </div>
+                                <div class="fixed-bottom">
+                                    <div class="container-fluid">
+                                        <div class="container mt-3">
+                                            <div id="icon-top-bottom" class="collapse">
+                                                <div class="mt-2">
+                                                    <div class="d-flex">
+                                                        <div class="p-1 flex-fill">
+                                                            <div style="float: left;padding: 5px 5px;">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                                                     height="32" fill="currentColor"
+                                                                     class="bi bi-qr-code-scan" viewBox="0 0 16 16">
+                                                                    <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0v-3Zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5ZM.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5Zm15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5ZM4 4h1v1H4V4Z"/>
+                                                                    <path d="M7 2H2v5h5V2ZM3 3h3v3H3V3Zm2 8H4v1h1v-1Z"/>
+                                                                    <path d="M7 9H2v5h5V9Zm-4 1h3v3H3v-3Zm8-6h1v1h-1V4Z"/>
+                                                                    <path d="M9 2h5v5H9V2Zm1 1v3h3V3h-3ZM8 8v2h1v1H8v1h2v-2h1v2h1v-1h2v-1h-3V8H8Zm2 2H9V9h1v1Zm4 2h-1v1h-2v1h3v-2Zm-4 2v-1H8v1h2Z"/>
+                                                                    <path d="M12 9h2V8h-2v1Z"/>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-1 flex-fill">
+                                                            <div class="p-1 flex-fill" style="float: right; ">
+                                                                <a th:href="@{/cart}" class="text-dark">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                                                         height="32" fill="currentColor"
+                                                                         class="bi bi-bag" viewBox="0 0 16 16">
+                                                                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                                                                    </svg>
+                                                                    <span class="position-absolute top-0 translate-middle badge rounded-pill bg-secondary">+99</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-bs-toggle="collapse" data-bs-target="#icon-top-bottom" style="height: 32px;background:#fffffc61">
+                                        <p class="text-info text-center">
+                                            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="32" height="32"  class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"/>
+                                            </svg>
+                                        </p>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button id="form-checkout__submit" type="submit"
+                                                class="btn text-white rounded-0 p-3" style="background:#85f1c2;font-size: 1.2rem;">
+                                            <span class="spinner"></span> Pagar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Result -->
+    <section class="shopping-cart white">
+        <div class="container container__result">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="items product info product-details">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-4 product-detail">
+                                <div class="product-info">
+                                    <div id="success-response">
+                                        <div class="container" style="width: 90%;padding-top:5%">
+                                            <p class="text-info text-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
+                                                     fill="currentColor" class="bi bi-check-circle"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                                </svg>
+                                            </p>
+                                             
+                                            <h3 class="text-info text-center" id="status-pagamento"></h3> 
+                                        </div>
+                                        <div class="container" style="padding-top:5%">
+                                            <div class="row mb-3">
+                                                <label class="text-center">Transação</label>
+                                                <p id="payment-id" class="fs-4 text-center">0</p>
+                                                <input id="transacao-id" type="hidden" class="fs-4 text-center"/> 
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="text-center">Detalhes</label>
+                                                <p id="payment-detail" class="fs-4 text-center">0</p>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="text-center">Status</label>
+                                                <p id="payment-status" class="fs-4 text-center">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- concluir -->
+
+            <div class="fixed-bottom">
+                <div class="d-grid gap-2">
+                    <a th:href="@{/pay/confirm}" id="concluir" type="submit"
+                       class="btn text-white rounded-0 p-3" style="background:#0dcaf0">
+                        <span class="spinner"></span> Concluir
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+
+<style>
+.form-control, .form-select{
+    padding: 0.575rem 0.75rem;
+    font-size: 1.2rem;
+}
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    border-color: #e3d7b6;
+    }
+.form-select.is-invalid, .was-validated .form-select:invalid {
+     border-color: #e3d7b6;
+    }
+.accordion-button {
+    background-color: #f7f7f7;
+    }
+.form-control.is-valid, .was-validated .form-control:valid, .form-select.is-valid, .was-validated .form-select:valid {
+    border-color: #b7f1ff9e;
+    }
+
+.form-control.is-valid, .was-validated .form-control:valid, .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"], .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"] {
+    background-image: url("/img/check.svg");
+}
+.form-control.is-invalid, .was-validated .form-control:invalid, .form-select.is-invalid, .was-validated .form-select:invalid, .form-select.is-invalid:not([multiple]):not([size]), .form-select.is-invalid:not([multiple])[size="1"], .was-validated .form-select:invalid:not([multiple]):not([size]), .was-validated .form-select:invalid:not([multiple])[size="1"]  {
+    background-image: url("/img/cancel.svg");
+}
+::-webkit-input-placeholder { /* Edge */
+  font-size: 0.85rem;
+  color:#c3d2e1;
+}
+</style>
+
+ 
+</html>
