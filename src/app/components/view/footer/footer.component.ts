@@ -46,6 +46,10 @@ export class FooterComponent{
         this.nameBottom = "Continuar"
         this.nextUrl = "/pagamento/card"
       }
+      if(route.url.includes("/login")){
+        this.nameBottom = "Voltar"
+        this.nextUrl = "/cart"
+      }
     }  
 
     isOpen: boolean = false

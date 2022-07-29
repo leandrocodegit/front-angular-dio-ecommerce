@@ -10,6 +10,11 @@ function getToken() {
     return obJectPay
 }
 
+function getAuth(){   
+    console.log('Init');
+    return payer
+  }
+
 function loadCardForm() {
     if (isInstance == false) {
         const productCost = document.getElementById('amount').value;
@@ -133,7 +138,7 @@ value='${v.results[0].id}'>${v.results[0].issuer.name}</option>`);
 }
 function atualizarToken() {
 
-    let cardNumber = $("#numeroCartao").val().replaceAll(" ", "");
+    let cartao = $("#numeroCartao").val().replaceAll(" ", "");
 
 
     let cardholderName = $("#form-checkout__cardholderName").val();
@@ -147,7 +152,7 @@ function atualizarToken() {
     if (getValid()) {
 
         const card = mercadopago.createCardToken({
-            cardNumber,
+            cardNumber: cartao,
             cardholderName,
             cardExpirationMonth,
             cardExpirationYear,
@@ -215,6 +220,9 @@ function getValid() {
 }
 
 
+
+
+ 
 
 
 

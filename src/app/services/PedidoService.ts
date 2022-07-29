@@ -18,4 +18,11 @@ export class PedidoService {
             .set('Access-Control-Allow-Origin', '*');
         return this.httpClient.get<Pedido>("http://localhost:9000/process_pay/pedido/" + id, { 'headers': options })
     }
+
+    listPedidos(): Observable<Pedido[]> {
+        const options = new HttpHeaders()
+            .set('content-type', 'application/json')
+            .set('Access-Control-Allow-Origin', '*');
+        return this.httpClient.get<Pedido[]>("http://localhost:9000/process_pay/pedido", { 'headers': options })
+    }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { inject, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,17 +15,20 @@ import { CarrinhoComponent } from './components/view/carrinho/carrinho.component
 import { CardComponent } from './components/checkout/card/card.component';
 import { PixComponent } from './components/checkout/pix/pix.component';
 import { CadastroComponent } from './components/view/cadastro/cadastro.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadComponent } from './components/view/load/load.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { StatusComponent } from './components/checkout/status/status.component';
 import { TopComponent } from './components/view/top/top.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
- 
- 
-
-export class MaterialModule {}
+import { PedidosComponent } from './components/view/pedidos/pedidos.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { LoginComponent } from './components/social/login/login.component';   
+import { LogoutComponent } from './components/social/logout/logout.component'; 
+import { CookiesService } from './services/CookiesService';
+   
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +42,11 @@ export class MaterialModule {}
     CadastroComponent,
     LoadComponent,
     StatusComponent,
-    TopComponent
+    TopComponent,
+    PedidosComponent,
+    LoginComponent,
+    LogoutComponent
+   
   ],
   imports: [
     BrowserModule,
@@ -51,9 +58,13 @@ export class MaterialModule {}
     HttpClientModule,
     MatProgressSpinnerModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatGridListModule,
+    
+    
   ],
-  providers: [ ],
+  providers: [CookiesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CardHolder } from 'src/app/models/checkouts/CardHolder';
 import { ResponseCheckout } from 'src/app/models/checkouts/ResponseCheckout';
 import { MensagemService } from 'src/app/services/MensagemService';
-import { PaymentService } from 'src/app/services/PaymentService'; 
+import { PaymentService } from 'src/app/services/PaymentService';
 import { SheetComponent } from '../../view/sheet/sheet.component';
 
 
@@ -12,6 +12,7 @@ declare var loadCardForm: any;
 declare var getToken: any
 declare var atualizarToken: any
 declare var getValid: any
+declare var getAuth: any
 
 @Component({
   selector: 'spa-card',
@@ -70,7 +71,7 @@ export class CardComponent implements OnInit {
       if (this.responsePay.status == 'Aprovado') {
         this.route.navigate(['/pedido/status/' + this.responsePay.id]);
       }
-      else{
+      else {
         this.mensagemService.sendMesage([result.detail, result.status])
         this._bottomSheet.open(SheetComponent);
         setTimeout(() => this._bottomSheet.dismiss(SheetComponent), 3000);
@@ -83,13 +84,13 @@ export class CardComponent implements OnInit {
       this.isLoad = true
       this.error = erro
     })
-
-
-
-
   }
 
-
+  public signInWithGoogle(): void {
+    
+    getAuth()
+  
+}
 
 
 }

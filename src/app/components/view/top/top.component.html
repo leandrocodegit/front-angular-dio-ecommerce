@@ -1,14 +1,15 @@
  
         <div class="container p-2 bg-dark">
             <a class="btn float-end" data-bs-toggle="dropdown">
-                <img src="assets/img/user.png" class="rounded-circle mx-auto d-block" style="width:50%;float: right;">
+                <img src="{{picture}}" class="rounded-circle mx-auto d-block" style="width:50%;float: right;">
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Meus pedidos</a></li>
+                <li><a class="dropdown-item" href="#">Olá, {{nome}}</a></li>
+                <li><a class="dropdown-item" routerLink="/pedido">Meus pedidos</a></li>
                 <li><a class="dropdown-item" href="#">Sair</a></li>
             </ul>
             <span class="text-secondary">Total</span><br>
-            <h2 id="total" class="display-4 text-white" style="letter-spacing: 2px;">R$ 1000,90</h2>
-            <p th:if="${usuario != null}" th:text="${usuario.nome}"></p>
+            <h2 *ngIf="isVisible" id="total" class="display-4 text-white" style="letter-spacing: 2px;">R$ 1000,90</h2>
+            <p *ngIf="isVisible" th:if="${usuario != null}" th:text="${usuario.nome}"></p>
         </div> 
  
