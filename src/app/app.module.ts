@@ -28,6 +28,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { LoginComponent } from './components/social/login/login.component';   
 import { LogoutComponent } from './components/social/logout/logout.component'; 
 import { CookiesService } from './services/CookiesService';
+import { FrameLoginComponent } from './components/social/frame-login/frame-login.component';
+import { FrameDirective } from './components/social/diretivas/frame.directive';  
+import { QrCodeComponent } from './components/scan/qr-code/qr-code.component';
+
    
 @NgModule({
   declarations: [
@@ -45,9 +49,13 @@ import { CookiesService } from './services/CookiesService';
     TopComponent,
     PedidosComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent, 
+    FrameDirective,
+    FrameLoginComponent,
+    QrCodeComponent
    
   ],
+  entryComponents:[],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -60,7 +68,7 @@ import { CookiesService } from './services/CookiesService';
     FormsModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatGridListModule,
+    MatGridListModule
     
     
   ],

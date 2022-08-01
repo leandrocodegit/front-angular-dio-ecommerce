@@ -1,29 +1,16 @@
 import { Address } from "./Address"
 
-export class Endereco implements Address{
-    cep: string
-    logradouro: string
-    complemento: string
-    bairro: string
-    localidade: string
-    uf: string
-    ibge: string
-    gia: string
-    ddd: string
-    siafi: string
-    
+export class Endereco{ 
 
     constructor(
-        cep: string,
-        logradouro: string,
-        complemento: string,
-        bairro: string,
-        localidade: string,
-        uf: string,
-        ibge: string,
-        gia: string,
-        ddd: string,
-        siafi: string,
+        public cep: string,
+        public logradouro: string,
+        public numero: string,
+        public complemento: string,
+        public bairro: string,
+        public localidade: string,
+        public uf: string, 
+        public ddd: string, 
     ){
 
         this.cep = cep
@@ -31,11 +18,7 @@ export class Endereco implements Address{
         this.complemento = complemento
         this.bairro = bairro
         this.localidade = localidade
-        this.uf = uf
-        this.ibge = ibge
-        this.gia = gia
-        this.ddd = ddd
-        this.siafi = siafi
+        this.uf = uf 
     }
     
 }

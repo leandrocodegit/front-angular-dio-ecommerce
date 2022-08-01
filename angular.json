@@ -30,6 +30,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/jquery/dist/jquery.js",
               "src/assets/js/index.js",
+              "src/assets/js/qrcode.js",
               "src/assets/js/auth.js"]
           },
           "configurations": {

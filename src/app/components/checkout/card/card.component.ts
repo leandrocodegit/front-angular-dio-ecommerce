@@ -5,6 +5,7 @@ import { CardHolder } from 'src/app/models/checkouts/CardHolder';
 import { ResponseCheckout } from 'src/app/models/checkouts/ResponseCheckout';
 import { MensagemService } from 'src/app/services/MensagemService';
 import { PaymentService } from 'src/app/services/PaymentService';
+import { RouterService } from 'src/app/services/RouterService';
 import { SheetComponent } from '../../view/sheet/sheet.component';
 
 
@@ -38,12 +39,14 @@ export class CardComponent implements OnInit {
     private mensagemService: MensagemService,
     private paymentService: PaymentService,
     private _bottomSheet: MatBottomSheet,
-    private route: Router
+    private routerService: RouterService,
+    private router: Router
   ) {
 
   }
   ngOnInit(): void {
     new loadCardForm()
+    this.routerService.savePreviosPage(this.router.url)
   }
 
 
@@ -69,10 +72,10 @@ export class CardComponent implements OnInit {
       this.responsePay = result
       console.log(result)
       if (this.responsePay.status == 'Aprovado') {
-        this.route.navigate(['/pedido/status/' + this.responsePay.id]);
+        this.router.navigate(['/pedido/status/' + this.responsePay.id]);
       }
       else {
-        this.mensagemService.sendMesage([result.detail, result.status])
+        this.mensagemService.sendMesage([result.detail, result.status], true)
         this._bottomSheet.open(SheetComponent);
         setTimeout(() => this._bottomSheet.dismiss(SheetComponent), 3000);
         this.isLoad = false
@@ -80,8 +83,9 @@ export class CardComponent implements OnInit {
       }
 
     }, (erro) => {
-      console.log('Error ' + JSON.stringify(erro))
-      this.isLoad = true
+      this.mensagemService.sendMesage(['Oooops! algo deu errado', erro], true)
+      console.log('Error ' + JSON.stringify(erro.message))
+      this.isLoad = false
       this.error = erro
     })
   }

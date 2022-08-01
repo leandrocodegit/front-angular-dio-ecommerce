@@ -10,14 +10,14 @@ import { FooterComponent } from '../footer/footer.component';
 })
 export class SheetComponent implements OnInit {
 
-  mesage: string[] = []
+  mensagem: string[] = []
 
   constructor(
     private mensagemService: MensagemService,
     private _bottomSheetRef: MatBottomSheetRef<FooterComponent>) {}
 
   ngOnInit(): void {
-    this.mesage = this.mensagemService.mensage
+    this.mensagem = this.mensagemService.mensage   
   }
 
   openLink(event: MouseEvent): void {

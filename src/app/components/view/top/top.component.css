@@ -1,0 +1,29 @@
+ 
+ #itemName{  
+    font-size: 28px;  
+}
+
+.box-top{ 
+    padding: 1px;
+}
+
+.icon {
+    position: absolute;
+    right: 3px;
+    margin: 12px; 
+}
+ 
+a img{
+    min-width: 50px; 
+}
+.box-loja p{
+    font-family: 'Play', sans-serif!important;  
+    letter-spacing: 2px;    
+}
+#total{ 
+    color: #e1e1e1!important;   
+}
+#total b{
+    color: #83ff12
+}
+ 

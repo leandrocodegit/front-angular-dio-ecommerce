@@ -4,11 +4,8 @@
 
 
   .mat-expansion-panel-body {
-    padding: 0 24px 16px;
-    background-color: red;
+    padding: 0 1px 6px!important;
+    background-color: red!important;
 }
 
-#panel > .mat-expansion-panel-body {
-    padding: 0 24px 16px;
-    background-color: red;
-  }
+ 

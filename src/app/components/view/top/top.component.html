@@ -1,15 +1,19 @@
- 
-        <div class="container p-2 bg-dark">
-            <a class="btn float-end" data-bs-toggle="dropdown">
-                <img src="{{picture}}" class="rounded-circle mx-auto d-block" style="width:50%;float: right;">
+<meta name="theme-color" content="#212529">
+        <div class="box-top bg-black">
+            <a class="float-end icon" data-bs-toggle="dropdown">
+                <img src="{{picture}}" class="rounded-circle mx-auto d-block" style="width:50%;float: right; ">
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Olá, {{nome}}</a></li>
-                <li><a class="dropdown-item" routerLink="/pedido">Meus pedidos</a></li>
-                <li><a class="dropdown-item" href="#">Sair</a></li>
-            </ul>
-            <span class="text-secondary">Total</span><br>
-            <h2 *ngIf="isVisible" id="total" class="display-4 text-white" style="letter-spacing: 2px;">R$ 1000,90</h2>
-            <p *ngIf="isVisible" th:if="${usuario != null}" th:text="${usuario.nome}"></p>
+                <li *ngIf="!isVisible" routerLink="/login"><a class="dropdown-item font-padrao h4">Fazer login</a></li>
+                <li id="itemName" *ngIf="isVisible"><a class="dropdown-item font-padrao" style="color: #7f9bff;"><b>Olá,</b> {{nome}}</a></li>
+                <li *ngIf="isVisible" routerLink="/cadastro"><a class="dropdown-item font-padrao h4">Meu cadastro</a></li>
+                <li *ngIf="isVisible"><a class="dropdown-item font-padrao h4" routerLink="/pedido">Meus pedidos</a></li>
+                <li *ngIf="isVisible"><a class="dropdown-item font-padrao h4" (click)="sair()">Sair</a></li>
+            </ul> 
+        <div class="box-loja">
+            <p  class="text-secondary h5 text-center" >DECORATEM</p> 
+            <p id="total" class="display-5 text-secondary text-center"><b>R$ </b>{{total}}</p>     
         </div> 
+        </div> 
+       
  

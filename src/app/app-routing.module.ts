@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CardComponent } from './components/checkout/card/card.component';
 import { PixComponent } from './components/checkout/pix/pix.component';
 import { StatusComponent } from './components/checkout/status/status.component';
+import { QrCodeComponent } from './components/scan/qr-code/qr-code.component';
+import { FrameLoginComponent } from './components/social/frame-login/frame-login.component';
 import { LoginComponent } from './components/social/login/login.component';
 import { LogoutComponent } from './components/social/logout/logout.component';
 import { CadastroComponent } from './components/view/cadastro/cadastro.component';
@@ -13,10 +15,12 @@ import { ProdutoComponent } from './components/view/produto/produto.component';
 
 const routes: Routes = [
  
-  { path: '', component: ProdutoComponent } ,
+  { path: '', component: ProdutoComponent } , 
+  //{ path: 'login/sucess', redirectTo: 'pagamento', pathMatch: 'full' },
+  { path: 'scan', component: QrCodeComponent } ,
   { path: 'login', component: LoginComponent } ,
-  { path: 'login/', component: LoginComponent } ,
   { path: 'login/logout', component: LogoutComponent } ,
+  { path: 'login/frame', component: FrameLoginComponent } ,
   { path: 'login/:credential', component: LoginComponent } ,
   { path: 'auth', component: LoginComponent } ,
   { path: 'cart', component: CarrinhoComponent } ,

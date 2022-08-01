@@ -32,10 +32,13 @@ export class AuthService implements CanActivate {
         const options = new HttpHeaders()
             .set('Authorization', 'Bearer ' + token);
         this.httpClient.post<User>("https://www.googleapis.com/oauth2/v3/userinfo", "", { 'headers': options }).subscribe(result => {
-            localStorage.setItem('name', result.name);
-            localStorage.setItem('picture', result.picture);
-            localStorage.setItem('email', result.email);
+            localStorage.setItem('name', result.name!);
+            localStorage.setItem('picture', result.picture!);
+            localStorage.setItem('email', result.email!);
         })
     }
 
 }
+
+
+ 
