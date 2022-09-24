@@ -1,11 +1,6 @@
-export class Identification {
-    identificationType: string
-    identificationNumber: string
-
-    constructor(identificationType: string,
-        identificationNumber: string
-    ) {
-        this.identificationType = identificationType
-        this.identificationNumber = identificationNumber
-    }
+export class Identification { 
+    constructor(
+        public identificationType: string = "",
+        public identificationNumber: string = ""
+    ) { }
 }

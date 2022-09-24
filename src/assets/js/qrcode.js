@@ -1,9 +1,10 @@
 let video = document.createElement("video");
 let canvasElement = document.getElementById("canvas");
 let canvas
+let url = ""
 
-function play() {
-
+function qrcode() {
+    return url
 }
 
 function drawLine(begin, end) {
@@ -26,12 +27,7 @@ function initScan() {
 
     canvasElement = document.getElementById("canvas");
     canvas = canvasElement.getContext("2d");
-
-
-    //alert(video.videoHeight);
-
-
-
+    
     var constraints = {
         video: {
             video: true,
@@ -50,9 +46,8 @@ function initScan() {
         .catch(function (err0r) {
             console.log("Something went wrong!");
         });
-
-
 }
+
 
 function tick() {
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
@@ -65,20 +60,20 @@ function tick() {
             inversionAttempts: "dontInvert",
         });
         if (code) {
-            drawLine(code.location.topLeftCorner, code.location.topRightCorner);
-            drawLine(code.location.topRightCorner, code.location.bottomRightCorner);
-            drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner);
-            drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner);
-            console.log('URL: ' + code.data)
-            window.location.href = code.data;
-            localStream.stop();
+            url = code.data;
+            document.getElementById('eventBT').click()
         }
     }
     requestAnimationFrame(tick);
 }
+
 function stop() {
     const mediaStream = video.srcObject;
+    if(mediaStream != null){
     const tracks = mediaStream.getTracks();
     tracks[0].stop();
     tracks.forEach(track => track.stop())
+    }
 }
+
+

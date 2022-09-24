@@ -1,4 +1,4 @@
-import { inject, NgModule, PLATFORM_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,19 +18,22 @@ import { CadastroComponent } from './components/view/cadastro/cadastro.component
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadComponent } from './components/view/load/load.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { StatusComponent } from './components/checkout/status/status.component';
+import { StatusComponent } from './components/view/pedidos/status/status.component';
 import { TopComponent } from './components/view/top/top.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PedidosComponent } from './components/view/pedidos/pedidos.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { LoginComponent } from './components/social/login/login.component';   
-import { LogoutComponent } from './components/social/logout/logout.component'; 
-import { CookiesService } from './services/CookiesService';
-import { FrameLoginComponent } from './components/social/frame-login/frame-login.component';
-import { FrameDirective } from './components/social/diretivas/frame.directive';  
-import { QrCodeComponent } from './components/scan/qr-code/qr-code.component';
+import { LoginComponent } from './components/social/login/login.component';     
+import { QrCodeComponent } from './components/scan/qr-code/qr-code.component'; 
+import { ConfirmComponent } from './components/checkout/confirm/confirm.component';
+import { DetalhesPedidoComponent } from './components/view/detalhes-pedido/detalhes-pedido.component';
+import { BotaoEnviarComponent } from './components/view/footer/botao-enviar/botao-enviar.component';
+import { MoedaPipe } from './pipes/moeda.pipe';  
+import { BotaoConfimarComponent } from './components/view/footer/botao-confimar/botao-confimar.component';
+import { EnderecoPipe } from './pipes/endereco.pipe';
+import { DevolucaoComponent } from './components/view/devolucao/devolucao.component'; 
 
    
 @NgModule({
@@ -48,11 +51,15 @@ import { QrCodeComponent } from './components/scan/qr-code/qr-code.component';
     StatusComponent,
     TopComponent,
     PedidosComponent,
-    LoginComponent,
-    LogoutComponent, 
-    FrameDirective,
-    FrameLoginComponent,
-    QrCodeComponent
+    LoginComponent, 
+    QrCodeComponent,
+    ConfirmComponent,
+    DetalhesPedidoComponent,
+    BotaoEnviarComponent,
+    MoedaPipe, 
+    BotaoConfimarComponent,
+    EnderecoPipe,
+    DevolucaoComponent   
    
   ],
   entryComponents:[],
@@ -72,7 +79,7 @@ import { QrCodeComponent } from './components/scan/qr-code/qr-code.component';
     
     
   ],
-  providers: [CookiesService],
+  providers: [  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

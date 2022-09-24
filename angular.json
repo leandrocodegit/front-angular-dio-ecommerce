@@ -29,7 +29,7 @@
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/jquery/dist/jquery.js",
-              "src/assets/js/index.js",
+              "src/assets/js/pay.js",
               "src/assets/js/qrcode.js",
               "src/assets/js/auth.js"]
           },
@@ -38,13 +38,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "8kb"
                 }
               ],
               "fileReplacements": [

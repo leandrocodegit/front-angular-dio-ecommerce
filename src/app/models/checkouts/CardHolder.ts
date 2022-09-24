@@ -1,31 +1,15 @@
 import { Payer } from "./Payer"
 
 export class CardHolder {
-     
-    token: string
-    issuerId: string
-    paymentMethodId: string
-    transactionAmount: string
-    installments: string
-    productDescription: string
-    payer: Payer
- 
+    
 
     constructor(
-        token: string,
-        issuerId: string,
-        paymentMethodId: string,
-        transactionAmount: string,
-        installments: string,
-        productDescription: string,
-        payer: Payer
-    ) {
-        this.token = token
-        this.issuerId = issuerId        
-        this.paymentMethodId = paymentMethodId
-        this.transactionAmount = transactionAmount 
-        this.installments = installments
-        this.productDescription = productDescription
-        this.payer = payer 
-    }
+       public token: string = "",
+       public issuer_id: string = "",
+       public payment_method_id: string = "",
+       public transaction_amount: string = "",
+       public installments: number = 0,
+       public numero_pedido: number = 0,
+       public payer: Payer = new Payer
+    ) {}
 }

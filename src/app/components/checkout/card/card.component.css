@@ -8,16 +8,16 @@
     font-size: 1.2rem;
 }
 .form-control.is-invalid, .was-validated .form-control:invalid {
-    border-color: #e3d7b6;
+    border-color: #e3d7b6!important;
     }
 .form-select.is-invalid, .was-validated .form-select:invalid {
-     border-color: #e3d7b6;
+     border-color: #e3d7b6!important;
     }
 .accordion-button {
-    background-color: #f7f7f7;
+    background-color: #f7f7f7!important;
     }
 .form-control.is-valid, .was-validated .form-control:valid, .form-select.is-valid, .was-validated .form-select:valid {
-    border-color: #b7f1ff9e;
+    border-color: #b7f1ff9e!important;
     }
 
 .form-control.is-valid, .was-validated .form-control:valid, .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"], .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"] {

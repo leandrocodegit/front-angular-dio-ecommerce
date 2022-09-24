@@ -1,32 +1,23 @@
-<spa-top></spa-top>
-<form id="formulario" method="POST" class="was-validated">
-    <div class="card-header h5 p-3 text-secondary">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle"
-            viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path fill-rule="evenodd"
-                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-        </svg>
-        <span id="dados" class="h6 p-1">Meus dados</span>
-    </div>
+<spa-top></spa-top> 
+<div style="margin-bottom: 200px;">
     <div class="card-body p-3">
         <div class="col-md-4">
             <label for="email" class="form-label text-secondary">Email:</label>
-            <input  value="{{cadastro.email}}" type="email" autocomplete="off" class="form-control is-valid" id="email"
+            <input disabled [(ngModel)]="usuario.email" type="email" autocomplete="off" class="form-control is-valid" id="email"
                 placeholder="Informe seu email" required/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="nome" class="form-label text-secondary">Nome completo:</label>
-            <input value="{{cadastro.nome}}" type="text" autocomplete="off" class="form-control is-valid" id="nome"
+            <input [(ngModel)]="usuario.nome" type="text" autocomplete="off" class="form-control is-valid" id="nome"
                 placeholder="Informe seu nome completo" required/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="celular" class="form-label text-secondary">Celular:</label>
-            <input  value="{{cadastro.contato}}" type="tel" autocomplete="off" class="form-control is-valid"
+            <input  [(ngModel)]="usuario.contato" type="tel" autocomplete="off" class="form-control is-valid"
                 pattern="[1-9]{1}[0-9][0-9]{9}" data-inputmask="'mask': '(999) 999-9999'" id="celular"
                 placeholder="Celular de contato ou recado" required value="11932740878"/>
             <div class="valid-feedback">
@@ -34,7 +25,7 @@
         </div>
         <div class="col-md-4">
             <label for="cpf" class="form-label text-secondary">Documento:</label>
-            <input value="{{cadastro.documento}}" type="tel" autocomplete="off" class="form-control is-valid"
+            <input value="{{usuario.documento}}" type="tel" autocomplete="off" class="form-control is-valid"
                 pattern="[0-9]{1}[0-9][0-9]{9}" id="cpf" placeholder="Informe seu cpf" required/>
             <div class="valid-feedback">
             </div>
@@ -52,48 +43,48 @@
     <div class="card-body p-3">
         <div class="col-md-4">
             <label for="cep" class="form-label text-secondary">CEP:</label> 
-            <input  value="{{cadastro.endereco.cep}}" #input (keyup)="buscaCep(input.value)" type="text"
+            <input   [(ngModel)]="usuario.endereco_principal.cep" type="text" #input (keyup)="buscaCep(input.value)"
                 class="form-control is-valid" id="cep" placeholder="Informe seu Cep" required/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="numero" class="form-label text-secondary">Numero:</label>
-            <input value="{{cadastro.endereco.numero}}" type="text" class="form-control is-valid" id="numero"
+            <input [(ngModel)]="usuario.endereco_principal.numero" type="text" class="form-control is-valid" id="numero"
                 placeholder="Numero do endereço" required/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="complemento" class="form-label text-secondary">Complemento:</label>
-            <input value="{{cadastro.endereco.complemento}}" type="text" class="form-control" id="complemento"/>
+            <input [(ngModel)]="usuario.endereco_principal.complemento" type="text" class="form-control" id="complemento"/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="rua" class="form-label text-secondary">Rua:</label>
-            <input value="{{cadastro.endereco.logradouro}}" type="text" class="form-control is-valid" id="rua"
+            <input [(ngModel)]="usuario.endereco_principal.logradouro" type="text" class="form-control is-valid" id="rua"
                 placeholder="Rua ou avenida" required/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="bairro" class="form-label text-secondary">Bairro:</label>
-            <input value="{{cadastro.endereco.bairro}}" type="text" class="form-control is-valid" id="bairro"
+            <input [(ngModel)]="usuario.endereco_principal.bairro" type="text" class="form-control is-valid" id="bairro"
                 placeholder="Bairro" required/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="cidade" class="form-label text-secondary">Cidade:</label>
-            <input value="{{cadastro.endereco.localidade}}" type="text" class="form-control is-valid" id="cidade"
+            <input [(ngModel)]="usuario.endereco_principal.localidade" type="text" class="form-control is-valid" id="cidade"
                 placeholder="cidade" required/>
             <div class="valid-feedback">
             </div>
         </div>
         <div class="col-md-4">
             <label for="uf" class="form-label text-secondary">Estado:</label>
-            <select value="{{cadastro.endereco.uf}}" required class="form-select" id="uf"
+            <select [(ngModel)]="usuario.endereco_principal.uf" required class="form-select" id="uf"
                 aria-label="Default select example">
                 <option selected disabled value="">Selecione o estado</option>
                 <option value="AC">Acre</option>
@@ -127,6 +118,6 @@
             <div class="valid-feedback">
             </div>
         </div>
-    </div>
-</form>
-<spa-footer></spa-footer>
+    </div> 
+</div>
+<spa-footer  [nameButton]="nameButton" [isView]="isOpens" [color]="color" (eventFooter)="enviar()" (eventSheet)="openSheet()"></spa-footer>

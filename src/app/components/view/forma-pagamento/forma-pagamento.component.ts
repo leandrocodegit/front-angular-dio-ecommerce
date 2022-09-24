@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/services/MensagemService';
+import { PagamentoService } from 'src/app/services/pagamento/PagamentoService';
+import { PedidoService } from 'src/app/services/pedido/PedidoService';
+import { RestPedido } from 'src/app/services/pedido/rest/RestPedido';
 import { RouterService } from 'src/app/services/RouterService';
 import { FooterComponent } from '../footer/footer.component';
 
@@ -13,24 +16,39 @@ import { FooterComponent } from '../footer/footer.component';
 export class FormaPagamentoComponent implements OnInit, OnDestroy {
 
   constructor(
+    private mensagemService: MensagemService,
+    private pedidoService: PedidoService,
     private routerService: RouterService,
-    private router: Router,
-    private mensagemService: MensagemService
+    private restPedido: RestPedido,
+    private router: Router
   ) { }
-  
-  ngOnInit(): void {  
-    console.log('Pagina atual ' + this.routerService.previosPage)
-    if (this.routerService.previosPage == '/login') {
-      var saldacao = 'Muito bom!'
-      if (localStorage.getItem('isLogado') === 'true') {
-        saldacao = 'É isso ae, ' + localStorage.getItem('name') + '!'
+
+  ngOnInit(): void {
+
+    if(this.pedidoService.findPedido().itens == 0)
+      this.router.navigate(["/cart"])
+
+    if (localStorage.getItem('pay') != null) {
+      if (localStorage.getItem('pay') == 'card') {
+        this.router.navigate(["/pagamento/card"])
       }
-      this.mensagemService.sendMesage([saldacao, "Escolha umas das formas de pagamento e bora lá!"], true)
+      if (localStorage.getItem('pay') == 'pix') {
+        this.router.navigate(["/pagamento/pix"])
+      }
     }
-    this.routerService.savePreviosPage(this.router.url)  
   }
 
-  ngOnDestroy(): void { 
+  ngOnDestroy(): void {
+  }
+
+  pay(type: string) {
+    localStorage.setItem('pay', type)
+    this.router.navigate(["/pagamento/" + type])
+    console.log('Pay ' + localStorage.getItem('pay'))
+  }
+
+  enviar() {
+    this.router.navigate(["/cart"])
   }
 
 }

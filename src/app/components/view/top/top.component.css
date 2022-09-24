@@ -3,27 +3,25 @@
     font-size: 28px;  
 }
 
-.box-top{ 
-    padding: 1px;
-}
-
-.icon {
-    position: absolute;
-    right: 3px;
-    margin: 12px; 
+.close{
+    visibility: hidden; 
 }
  
 a img{
-    min-width: 50px; 
+    width: 45px; 
 }
-.box-loja p{
+.box-loja{ 
     font-family: 'Play', sans-serif!important;  
-    letter-spacing: 2px;    
+    letter-spacing: 2px;   
+    font-size: 28px; 
+    margin-top: 10px;
 }
-#total{ 
-    color: #e1e1e1!important;   
+
+.row{
+    --bs-gutter-x: 0rem!important;
 }
-#total b{
-    color: #83ff12
+
+.box-top{
+    padding: 5px;
 }
  

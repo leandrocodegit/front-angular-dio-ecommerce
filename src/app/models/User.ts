@@ -1,3 +1,7 @@
+import { Usuario } from "./usuario/Usuario";
+
+ 
+
 export class User {
 
     constructor()
@@ -20,7 +24,8 @@ export class User {
         iss: string,
         jti: string,
         nbf: string,
-        sub: string)
+        sub: string,
+        cadastro: Usuario)
 
     constructor(
         public name?: string,
@@ -35,7 +40,8 @@ export class User {
         public iss?: string,
         public jti?: string,
         public nbf?: string,
-        public sub?: string) {
+        public sub?: string,
+        public cadastro?: Usuario) {
 
     }
 }

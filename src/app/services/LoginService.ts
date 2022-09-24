@@ -1,8 +1,8 @@
  
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core"; 
-import { Observable } from "rxjs";
-import { Cadastro } from "../models/Cadastro";
+import { Observable } from "rxjs"; 
+import { Usuario } from "../models/usuario/Usuario";
 
 @Injectable({
     providedIn: 'root'
@@ -21,11 +21,11 @@ export class LoginService{
         this.token = token
     }
 
-    buscaCadastro(email: string): Observable<Cadastro>{
+    buscaCadastro(email: string): Observable<Usuario>{
         const options = new HttpHeaders()
         .set('content-type', 'application/json')
         .set('Access-Control-Allow-Origin', '*');
-      return   this.http.post<Cadastro>("http://localhost:9000/process_pay/cadastro", JSON.stringify(email), { 'headers': options })  
+      return   this.http.get<Usuario>("http://localhost:9096/api/v1/user/" + email, { 'headers': options })  
     }
 
 

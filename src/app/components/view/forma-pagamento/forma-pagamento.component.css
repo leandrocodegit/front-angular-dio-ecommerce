@@ -13,3 +13,6 @@
     font-family: roboto;
     font-size: 22px;
     }
+    .card{
+        min-height: 60px;
+    }

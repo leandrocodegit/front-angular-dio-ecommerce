@@ -1,91 +1,45 @@
 
-var jsonPayload = null
-var facebook
 
-// Login google
+navigate = this.router
+var login_event = function(response) {
 
-function parseJwt(token) {
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-  return JSON.parse(jsonPayload);
-};
- 
-function handleCredentialResponse(response) {
-  console.log('Parse credential' + parseJwt(response.credential))
-}
+  console.log(JSON.stringify(login_event))
+  
+  if(response.authResponse!= null)
+  if(response.authResponse.accessToken != null)
 
-function getPayLoad() {
-  console.log('Payload ' +  JSON.stringify(jsonPayload))
-  if (jsonPayload == null) {
-    initFacebook()
-    FB.getLoginStatus(function (response) {
-      console.log('Checando status facebook')
-      if (response && response.status === 'connected') {
-        FB.api('/me?fields=id,name,email,picture', function (response) {
-          jsonPayload = JSON.stringify(response)
-          console.log('Facebook: ' + JSON.stringify(jsonPayload));
-        }); 
-      }
-    });
-  }
-  return jsonPayload
-}
+  
 
-function continueWithNextIdp(notification) {
-  console.log('Notfication ' + notification)
-  if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-    console.log('Notfication ' + notification)
-  }
-}
+  console.log("status" + response.authResponse.accessToken) 
+  if(localStorage.getItem("isLogado") != 'true')
+    if (response.status === 'connected') {
+      FB.api('/me?fields=id,name,email,picture', function (result) {
+        console.log('Checando status facebook ********************** ' + JSON.stringify(result))
+        var user = JSON.parse(JSON.stringify(result))
+        if (user != null) {               
+          localStorage.setItem("isLogado", "true")
+          localStorage.setItem("user", JSON.stringify(user))
+          localStorage.setItem("name", user.name)
+          localStorage.setItem("email", user.email)
+          localStorage.setItem("type", "facebook")
+          localStorage.setItem("token", response.authResponse.accessToken)       
+          document.getElementById('eventBT').click()          
+        }
+      });          
+    }   
+    
 
-// Login facebook
-
-
-function logout() {
-
-  console.log('Logout init')
-
-
-  FB.getLoginStatus(function (response) {
-    if (response && response.status === 'connected') {
-      FB.logout(function (response) {
-        console.log('Logout ' + response)
-      });
+    if (localStorage.getItem('isLogado') == 'true') {
+      var interval = setInterval(() => {
+        
+        console.log('Cadastro ' + localStorage.getItem('cadastro'))
+        clearInterval(interval)
+      }, 2000)
+      
     }
-  });
-  console.log('Logout finish')
+          
+      
 }
 
-function initFacebook() {
-   
-  //  $("#box").load();
- 
-  FB.init({
-    appId: '322371943411039',
-    version: 'v14.0'
-  });
-}
-
-function checkLoginState() {
-  FB.getLoginStatus(function (response) {
-    statusChangeCallback(response);
-  });
-}
-
-function login() {
-  FB.login(function (response) {
-    console.log('Log ' + JSON.stringify(response));
-  }, {
-    scope: 'public_profile',
-    return_scopes: true
-  });
-}
-
-
-
-
-
-
+console.log("login_event " + localStorage.getItem('token'));  
+FB.Event.subscribe('auth.authResponseChange', login_event);

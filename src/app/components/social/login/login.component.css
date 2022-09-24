@@ -6,9 +6,11 @@
     justify-content: center!important;
     align-items: center!important;;
     margin: auto!important;
-    padding: auto!important;
-    background-color: red;
+    padding: auto!important; 
     }
+    .close{
+        display: none;
+    }    
    
 
  

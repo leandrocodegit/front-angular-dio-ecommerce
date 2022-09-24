@@ -1,10 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SafeUrl } from '@angular/platform-browser';
+import { Location } from '@angular/common';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { QRCode } from 'src/app/models/qrcode/QRCode';
+import { MensagemService } from 'src/app/services/MensagemService';
+import { PedidoService } from 'src/app/services/pedido/PedidoService';
+import { RouterService } from 'src/app/services/RouterService';
 
 
 declare var initScan: any
-declare var play: any
 declare var stop: any
+declare var qrcode: any
 
 @Component({
   selector: 'spa-qr-code',
@@ -13,23 +18,45 @@ declare var stop: any
 })
 export class QrCodeComponent implements OnInit, OnDestroy {
 
-  public myAngularxQrCode: string = "";
-  public qrCodeDownloadLink: SafeUrl = "";
+  isViewIcons = false
 
-  constructor() { 
-    this.myAngularxQrCode = 'Your QR code data string';
+  constructor(
+    private mensagemService: MensagemService,
+    private pedidoService: PedidoService,
+    private routerService: RouterService,
+    private router: Router,
+  ) {
   }
   ngOnDestroy(): void {
     stop();
   }
 
   ngOnInit(): void {
-   initScan()
-   play();
+    if (!this.pedidoService.isEmpty())
+      this.isViewIcons = true
+    initScan()
   }
 
-  onChangeURL(url: SafeUrl) {
-    this.qrCodeDownloadLink = url;
+  enviar() {
+    this.voltar()
   }
 
+  voltar() {
+    if (this.routerService.previosPage == "/") {
+      if (localStorage.getItem('qrcode') != null) {
+        var qrcode: QRCode = JSON.parse(localStorage.getItem('qrcode')!)
+        this.router.navigate(['/scan/' + qrcode.id])
+      } else {
+        if (this.pedidoService.isEmpty())
+          this.mensagemService.sendMesage(['alert', 'Ooopa, quase lá.', 'Scanei um qrcode para continuar.'], false, true, 8000)
+        else this.router.navigate(['/cart'])
+      }
+    } else this.router.navigate([this.routerService.previosPage])
+  }
+
+  redirec() {
+    var url: string = qrcode()
+    if (url.length > 20)
+      this.router.navigate(['/scan/' + url.substring(url.lastIndexOf("/"))])
+  }
 }

@@ -1,15 +1,9 @@
 import { Identification } from "./Identification"
 
-export class Payer {
-    email: string
-    identification: Identification
-
-    constructor(email: string,
-        identification: Identification) {
-
-        this.email = email
-        this.identification = identification
-    }
+export class Payer { 
+    constructor(
+        public email: string = "",
+        identification: Identification = new Identification) { }
 
 
 }

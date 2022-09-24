@@ -1,23 +1,16 @@
-import { Component, ComponentFactoryResolver, Directive, NgModule, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/models/User';
-import { AuthService } from 'src/app/services/AuthService';
-import { getTestBed } from '@angular/core/testing';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { CookiesService } from 'src/app/services/CookiesService';
-import { interval, Subscription } from 'rxjs';
-import { RouterService } from 'src/app/services/RouterService';
-import { FrameLoginComponent } from '../frame-login/frame-login.component';
-import { FrameDirective } from '../diretivas/frame.directive';
-import { AdComponent } from '../diretivas/ad.component';
-import { MensagemService } from 'src/app/services/MensagemService';
+import { Component, OnDestroy, OnInit, } from '@angular/core';
+import {  Router } from '@angular/router';
+import { User } from 'src/app/models/User'; 
+import { RouterService } from 'src/app/services/RouterService';  
+import { LoginService } from 'src/app/services/LoginService';
+import { CLIENT_ID } from 'src/app/models/enuns/BEARER';
 
- 
+
 declare var FB: any
-declare var google: any 
-var navigate: Router
-
-var user: User = {}
+declare var google: any
+declare var jwt: any
+let navigate: Router
+var isDestroy = false
 
 @Component({
   selector: 'spa-login',
@@ -29,14 +22,19 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   user: User = {}
   interval = {} as any
+  isDestroy = false
+  
 
   ngOnInit(): void {
+    isDestroy = this.isDestroy
     google.accounts.id.initialize({
-      client_id: "731978274268-sbo35fdt0t1egp1ci26c43j86m55133o.apps.googleusercontent.com",
+      client_id: CLIENT_ID,
+      //client_id: "731978274268-fav8gquqd3gck12p9lh9nlhglmadce4v.apps.googleusercontent.com",
+      // client_id: "731978274268-laoh10g44o61u706qo9vn1mtdv8knk1h.apps.googleusercontent.com",
       context: "signin",
       auto_select: "true",
       ux_mode: "popup",
-      callback: this.handleCredentialResponse 
+      callback: this.handleCredentialResponse
 
     });
     google.accounts.id.renderButton(
@@ -54,33 +52,30 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
     google.accounts.id.prompt();
 
+
     FB.init({
       appId: '322371943411039',
-      version: 'v14.0'
-    });
-
-
-    
-    this.interval = setInterval(() => {
-      this.facebook()
-    }, 15000)
-
-    FB.XFBML.parse()
+      version: 'v14.0',
+      coockie: true
+    }); 
     this.routerService.savePreviosPage(this.router.url)
+    FB.XFBML.parse()
+
   }
-  ngOnDestroy(): void {
-    clearInterval(this.interval)
+  ngOnDestroy(): void {  
   }
 
   constructor(
     private router: Router,
     private routerService: RouterService,
-    private mensagemService: MensagemService
-  ) {
-    navigate = router
+    private loginService: LoginService 
+  ) { 
+   
   }
- 
+
   public handleCredentialResponse(response: any) {
+
+    console.log("Credential " + response.credential)
     var credential = response.credential
     var base64Url = credential.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -88,39 +83,27 @@ export class LoginComponent implements OnInit, OnDestroy {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
     this.user = JSON.parse(payload)
-
     if (this.user != null) {
-      console.log('Checando google ' + localStorage.getItem('isLogado'))
       localStorage.setItem("isLogado", "true")
       localStorage.setItem("type", "google")
-      localStorage.setItem("user", JSON.stringify(this.user)) 
-        localStorage.setItem("name", this.user.name!)
+      localStorage.setItem("token", credential)
+      localStorage.setItem("user", JSON.stringify(this.user))
+      localStorage.setItem("name", this.user.name!)
+      localStorage.setItem("email", this.user.email!) 
+      document.getElementById('eventBT')!.click()
     }
   }
 
-  private facebook() {
-    console.log('Checando status facebook ' + localStorage.getItem('isLogado'))
-    console.log('Type ' + localStorage.getItem('type'))
-    if(localStorage.getItem('isLogado') == 'false'){
-    FB.getLoginStatus(function (response: any) {
-      if (response && response.status === 'connected') {
-        FB.api('/me?fields=id,name,email,picture', function (response: any) {
-          console.log('Checando status facebook ' + JSON.stringify(response))
-          user = JSON.parse(JSON.stringify(response))
-          
+  redirect() {
+    if (localStorage.getItem('isLogado') == 'true') {
+      this.router.navigate(['/cadastro'])
+      console.log('Cadastro ' + localStorage.getItem('cadastro'))
+    }
+  }
 
-          if (user != null) {
-            localStorage.setItem("type", "facebook")
-            localStorage.setItem("isLogado", "true")
-            localStorage.setItem("user", JSON.stringify(user))
-            localStorage.setItem("name", user.name!)
-          }
-        });
-      }
-    });
-  }
-  else{
-    navigate.navigate(["/pagamento"])
+  enviar() {
+    this.router.navigate(["/cart"])
   }
 }
-}
+
+
